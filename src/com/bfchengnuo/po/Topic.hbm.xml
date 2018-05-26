@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bfchengnuo.po.Topic" table="topic" schema="vote">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="identity"/>
+        </id>
+        <property name="conte">
+            <column name="conte" sql-type="varchar(32)" length="32" not-null="true"/>
+        </property>
+        <set name="choosesById" inverse="true" lazy="false">
+            <key>
+                <column name="tid" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.bfchengnuo.po.Choose"/>
+        </set>
+    </class>
+</hibernate-mapping>

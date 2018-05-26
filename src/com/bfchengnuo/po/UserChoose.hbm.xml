@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bfchengnuo.po.UserChoose" table="user_choose" schema="vote">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="identity"/>
+        </id>
+        <property name="subdate">
+            <column name="subdate" sql-type="datetime" not-null="true"/>
+        </property>
+        <many-to-one name="usersByUid" class="com.bfchengnuo.po.Users" lazy="false">
+            <column name="uid" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="chooseByCid" class="com.bfchengnuo.po.Choose">
+            <column name="cid" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
