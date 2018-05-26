@@ -43,7 +43,9 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login.html");
             return;
         }
-        response.sendRedirect(request.getContextPath() + "/index.html");
+        // 登陆成功
+        request.getSession().setAttribute("user", user);
+        response.sendRedirect(request.getContextPath() + "/VoteServlet");
     }
 
     protected void reg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -25,4 +25,6 @@ public interface Dao<T> {
     List<ChooseAndCount> getChooseCount();
 
     T queryByName(Class<T> usersClass, String name);
+
+    void removeChooseByUid(int id);
 }

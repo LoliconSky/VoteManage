@@ -4,6 +4,7 @@ import com.bfchengnuo.dao.Dao;
 import com.bfchengnuo.dao.DaoImpl;
 import com.bfchengnuo.po.Choose;
 import com.bfchengnuo.po.Topic;
+import com.bfchengnuo.po.UserChoose;
 import com.bfchengnuo.po.Users;
 
 import java.util.ArrayList;
@@ -26,6 +27,11 @@ public class VoteService {
         return choose.getUserChoosesById().size();
     }
 
+    public Users queryUserById(int id){
+        Dao<Users> dao = new DaoImpl<>();
+        return dao.queryById(Users.class, id);
+    }
+
     public List<Users> queryChooseUsers(int cid){
         Choose choose = cDao.queryById(Choose.class, cid);
         List<Users> list = new ArrayList<>();
@@ -34,5 +40,15 @@ public class VoteService {
             list.add(user);
         });
         return list;
+    }
+
+    public void addUserChooseList(List<UserChoose> ucs){
+        Dao<UserChoose> dao = new DaoImpl<>();
+        ucs.forEach(dao::add);
+    }
+
+    public void removeAllChoose(Users user) {
+        Dao<UserChoose> dao = new DaoImpl<>();
+        dao.removeChooseByUid(user.getId());
     }
 }

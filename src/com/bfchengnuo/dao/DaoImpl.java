@@ -156,4 +156,26 @@ public class DaoImpl<T> implements Dao<T> {
         return null;
     }
 
+    @Override
+    public void removeChooseByUid(int id) {
+        try {
+            session = SF.getSession();
+            tx = session.beginTransaction();
+            String hql = "delete from UserChoose where usersByUid.id=?";
+            Query query = session.createQuery(hql);
+            query.setInteger(0, id);
+            query.executeUpdate();
+            tx.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
 }

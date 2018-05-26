@@ -13,6 +13,13 @@ public class Choose implements Serializable {
     private Topic topicByTid;
     private Collection<UserChoose> userChoosesById;
 
+    public Choose() {
+    }
+
+    public Choose(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

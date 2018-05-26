@@ -13,6 +13,13 @@ public class Users implements Serializable {
     private String password;
     private Collection<UserChoose> userChoosesById;
 
+    public Users() {
+    }
+
+    public Users(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
