@@ -9,6 +9,9 @@
             <column name="id" sql-type="int(11)"/>
             <generator class="identity"/>
         </id>
+        <property name="single">
+            <column name="single" sql-type="int(1)" length="1" not-null="true"/>
+        </property>
         <property name="conte">
             <column name="conte" sql-type="varchar(32)" length="32" not-null="true"/>
         </property>

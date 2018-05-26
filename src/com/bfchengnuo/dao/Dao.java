@@ -23,4 +23,6 @@ public interface Dao<T> {
     int getCount4Choose(Choose choose);
 
     List<ChooseAndCount> getChooseCount();
+
+    T queryByName(Class<T> usersClass, String name);
 }

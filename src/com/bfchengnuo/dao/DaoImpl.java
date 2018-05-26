@@ -132,4 +132,28 @@ public class DaoImpl<T> implements Dao<T> {
         return null;
     }
 
+    @Override
+    public T queryByName(Class<T> cls, String name) {
+        try {
+            session = SF.getSession();
+            tx = session.beginTransaction();
+            String hql = "from Users where name=?";
+            Query query = session.createQuery(hql);
+            query.setString(0, name);
+            T t = (T) query.uniqueResult();
+            tx.commit();
+            return t;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return null;
+    }
+
 }

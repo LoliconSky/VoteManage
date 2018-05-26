@@ -9,7 +9,16 @@ import java.util.Objects;
 public class Topic {
     private int id;
     private String conte;
+    private int single;
     private Collection<Choose> choosesById;
+
+    public int getSingle() {
+        return single;
+    }
+
+    public void setSingle(int single) {
+        this.single = single;
+    }
 
     public int getId() {
         return id;

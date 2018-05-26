@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H+ 后台主题UI框架 - FooTable</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-8" style="margin: 0 auto;float: none;">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>投票统计</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                                <thead id="th">
+                                <tr>
+                                    <th data-toggle="true">选项名称</th>
+                                    <th>类型</th>
+                                    <th data-hide="all">选项A</th>
+                                    <th data-hide="all">选项B</th>
+                                    <th data-hide="all">选项C</th>
+                                    <th data-hide="all">选项D</th>
+                                    <th data-hide="all">选项E</th>
+                                    <th data-hide="all">选项F</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tb"></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/footable/footable.all.min.js"></script>
+    <!-- layer javascript -->
+    <script src="js/plugins/layer/layer.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+    <script>
+        $(document).ready(function() {
+            queryAllTopic();
+        });
+
+        function queryAllTopic() {
+            $.ajax({
+                type: "get",
+                url: "VoteServlet?method=queryAllTopic",
+                dataType: "json",
+                success : function (data) {
+                    console.log(data);
+                    var main = $("#tb");
+
+                    // 遍历题目
+                    $.each(data, function (index, t) {
+                        var tr = $("<tr></tr>");
+                        tr.append($("<td>" + t.conte + "</td>"));
+                        // 类型
+                        tr.append($("<td>" + (t.single===0?'单选':'多选') + "</td>"));
+
+                        // 遍历选项
+                        $.each(t.choosesById, function (index, c) {
+                            var str = "<p style='width: 150px;display: inline-table;'>" + c.conte + " (" + c.userChoosesById.length + "人)</p>";
+                            str += "<button type='button' class='btn btn-primary btn-xs' onclick=\"queryUsers('" + c.id + "')\">查看详情</button>";
+                            var td = $("<td></td>");
+                            td.html(str);
+                            tr.append(td);
+                        });
+
+                        main.append(tr);
+                    });
+
+                    // 收尾
+                    $('.footable').footable();
+                    $('.footable2').footable();
+                }
+            })
+        }
+
+        function queryUsers(cid) {
+            $.ajax({
+                type: "get",
+                url: "VoteServlet?method=queryUsersByCid&cid=" + cid,
+                dataType: "json",
+                success: function (data) {
+                    var str = "";
+                    $.each(data, function (index, u) {
+                        str += u.name + "<br>";
+                    });
+
+                    if (str.length === 0){
+                        str = "无用户";
+                    }
+                    parent.layer.alert(str, {
+                        icon: -1,
+                        shadeClose: true,
+                        title: '用户列表'
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

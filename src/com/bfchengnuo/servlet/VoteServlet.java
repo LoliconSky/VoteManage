@@ -53,13 +53,13 @@ public class VoteServlet extends HttpServlet {
         VoteService voteService = new VoteService();
         List<Users> list = voteService.queryChooseUsers(Integer.parseInt(cid));
 
-        // JsonConfig config = new JsonConfig();
-        // config.setExcludes(new String[]{"userChoosesById", "password"});
-        // JSONArray ja = JSONArray.fromObject(list, config);
-        // response.getWriter().print(ja);
+        JsonConfig config = new JsonConfig();
+        config.setExcludes(new String[]{"userChoosesById", "password"});
+        JSONArray ja = JSONArray.fromObject(list, config);
+        response.getWriter().print(ja);
 
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("/show.jsp").forward(request,response);
+        // request.setAttribute("list", list);
+        // request.getRequestDispatcher("/show.jsp").forward(request,response);
     }
 
         @Override
