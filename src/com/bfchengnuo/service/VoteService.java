@@ -1,5 +1,6 @@
 package com.bfchengnuo.service;
 
+import com.bfchengnuo.common.bean.UserTopicChoose;
 import com.bfchengnuo.dao.Dao;
 import com.bfchengnuo.dao.DaoImpl;
 import com.bfchengnuo.po.Choose;
@@ -16,6 +17,7 @@ import java.util.List;
 public class VoteService {
     private Dao<Topic> tDao = new DaoImpl<>();
     private Dao<Choose> cDao = new DaoImpl<>();
+    private Dao<UserChoose> ucDao = new DaoImpl<>();
 
 
     public List<Topic> queryTopicAndChoose() {
@@ -43,12 +45,14 @@ public class VoteService {
     }
 
     public void addUserChooseList(List<UserChoose> ucs){
-        Dao<UserChoose> dao = new DaoImpl<>();
-        ucs.forEach(dao::add);
+        ucs.forEach(ucDao::add);
     }
 
     public void removeAllChoose(Users user) {
-        Dao<UserChoose> dao = new DaoImpl<>();
-        dao.removeChooseByUid(user.getId());
+        ucDao.removeChooseByUid(user.getId());
+    }
+
+    public List<UserTopicChoose> queryChooseByUid(int id) {
+        return ucDao.queryUCByUid(id);
     }
 }

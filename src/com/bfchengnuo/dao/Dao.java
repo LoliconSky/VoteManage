@@ -1,6 +1,7 @@
 package com.bfchengnuo.dao;
 
 import com.bfchengnuo.common.bean.ChooseAndCount;
+import com.bfchengnuo.common.bean.UserTopicChoose;
 import com.bfchengnuo.po.Choose;
 
 import java.io.Serializable;
@@ -27,4 +28,6 @@ public interface Dao<T> {
     T queryByName(Class<T> usersClass, String name);
 
     void removeChooseByUid(int id);
+
+    List<UserTopicChoose> queryUCByUid(int id);
 }

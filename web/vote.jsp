@@ -26,7 +26,7 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>请进行选择</h5>
+                        <h5>请进行选择/查看选择</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -42,30 +42,30 @@
                             <input type="hidden" name="method" value="addChoose">
                             <input type="hidden" name="uid" value="${requestScope.uid}">
 
-                            <c:forEach items="${requestScope.list}" var="t">
+                            <c:forEach items="${requestScope.list}" var="tp" varStatus="status">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">
-                                        ${t.conte}
+                                        ${tp.topic.conte}
                                         <!--<small class="text-navy">自定义样式</small>-->
                                     </label>
 
                                     <div class="col-sm-9">
                                         <%-- 单选 --%>
-                                        <c:if test="${t.single == 0}">
-                                            <c:forEach items="${t.choosesById}" var="c">
+                                        <c:if test="${tp.topic.single == 0}">
+                                            <c:forEach items="${tp.chooseAndSelect}" var="cs">
                                                 <div class="radio i-checks">
                                                     <label>
-                                                        <input type="radio" value="${c.id}" name="${c.id}"> <i></i> ${c.conte}</label>
+                                                        <input type="radio" ${cs.select?"checked":""} value="${cs.choose.id}" name="${status.count}"> <i></i> ${cs.choose.conte}</label>
                                                 </div>
                                             </c:forEach>
                                         </c:if>
 
                                         <%-- 多选 --%>
-                                        <c:if test="${t.single == 1}">
-                                            <c:forEach items="${t.choosesById}" var="c">
+                                        <c:if test="${tp.topic.single == 1}">
+                                            <c:forEach items="${tp.chooseAndSelect}" var="cs">
                                                 <div class="checkbox i-checks">
                                                     <label>
-                                                        <input type="checkbox" value="${c.id}" name="${c.id}"> <i></i> ${c.conte}</label>
+                                                        <input type="checkbox" ${cs.select?"checked":""} value="${cs.choose.id}" name="${status.count}"> <i></i> ${cs.choose.conte}</label>
                                                 </div>
                                             </c:forEach>
                                         </c:if>
@@ -76,7 +76,7 @@
                             </c:forEach>
 
 
-                            <div class="form-group">
+                            <div class="form-group" id="sub">
                                 <div style="text-align: center;">
                                     <button class="btn btn-primary" type="submit">提交选择</button>
                                     <button class="btn btn-white" type="submit">取消</button>
@@ -100,11 +100,19 @@
     <script src="js/plugins/iCheck/icheck.min.js"></script>
     <script>
         $(document).ready(function () {
+            isSelect();
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
         });
+
+        function isSelect() {
+            var s = $(":checked");
+            if (s.length !== 0) {
+                $("#sub").css('display','none');
+            }
+        }
     </script>
 </body>
 </html>

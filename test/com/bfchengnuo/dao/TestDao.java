@@ -1,6 +1,7 @@
 package com.bfchengnuo.dao;
 
 import com.bfchengnuo.common.bean.ChooseAndCount;
+import com.bfchengnuo.common.bean.UserTopicChoose;
 import com.bfchengnuo.po.Choose;
 import com.bfchengnuo.po.Topic;
 import com.bfchengnuo.po.Users;
@@ -51,5 +52,12 @@ public class TestDao {
     public void removeChooseByUid(){
         VoteService voteService = new VoteService();
         voteService.removeAllChoose(new Users(1));
+    }
+
+    @Test
+    public void getUTC(){
+        VoteService service = new VoteService();
+        List<UserTopicChoose> list = service.queryChooseByUid(2);
+        list.forEach(System.out::println);
     }
 }

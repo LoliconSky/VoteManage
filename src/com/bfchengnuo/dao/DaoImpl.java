@@ -1,6 +1,7 @@
 package com.bfchengnuo.dao;
 
 import com.bfchengnuo.common.bean.ChooseAndCount;
+import com.bfchengnuo.common.bean.UserTopicChoose;
 import com.bfchengnuo.factory.SF;
 import com.bfchengnuo.po.Choose;
 import org.hibernate.*;
@@ -176,6 +177,32 @@ public class DaoImpl<T> implements Dao<T> {
                 session.close();
             }
         }
+    }
+
+    @Override
+    public List<UserTopicChoose> queryUCByUid(int id) {
+        try {
+            session = SF.getSession();
+            tx = session.beginTransaction();
+            String sql = "SELECT u.id as id,c.tid as tid,uc.cid as cid FROM users as u LEFT JOIN user_choose as uc ON u.id = uc.uid LEFT JOIN choose as c ON c.id = uc.cid WHERE u.id = ?";
+            Query query = session.createSQLQuery(sql);
+            query.setInteger(0, id);
+            // 设置映射的非 hbm 实体
+            query.setResultTransformer(Transformers.aliasToBean(UserTopicChoose.class));
+            List<UserTopicChoose> list = query.list();
+            tx.commit();
+            return list;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return null;
     }
 
 }
