@@ -55,4 +55,8 @@ public class VoteService {
     public List<UserTopicChoose> queryChooseByUid(int id) {
         return ucDao.queryUCByUid(id);
     }
+
+    public void addTopic(Topic topic) {
+        tDao.add(topic);
+    }
 }

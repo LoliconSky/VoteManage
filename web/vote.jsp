@@ -19,70 +19,131 @@
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css?v=4.1.0" rel="stylesheet">
 </head>
-
-<body class="gray-bg">
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>请进行选择/查看选择</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
+<body class="gray-bg top-navigation">
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            <%-- 表头 --%>
+            <div class="row border-bottom white-bg">
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <div class="navbar-header">
+                        <button aria-controls="navbar" aria-expanded="false" data-target="#navbar"
+                                data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                            <i class="fa fa-reorder"></i>
+                        </button>
+                        <a href="index.html" class="navbar-brand">投票管理系统</a>
                     </div>
+                    <div class="navbar-collapse collapse" id="navbar">
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <a href="register.html">
+                                    注册页面
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <a href="login.html">
+                                    登陆页面
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <a href="VoteServlet">
+                                    投票界面
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <a href="show.html">
+                                    数据统计
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <a href="VoteServlet">
+                                    查看我的选择
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
 
-                    <div class="ibox-content">
-                        <form method="post" action="VoteServlet" class="form-horizontal">
-                            <input type="hidden" name="method" value="addChoose">
-                            <input type="hidden" name="uid" value="${requestScope.uid}">
-
-                            <c:forEach items="${requestScope.list}" var="tp" varStatus="status">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">
-                                        ${tp.topic.conte}
-                                        <!--<small class="text-navy">自定义样式</small>-->
-                                    </label>
-
-                                    <div class="col-sm-9">
-                                        <%-- 单选 --%>
-                                        <c:if test="${tp.topic.single == 0}">
-                                            <c:forEach items="${tp.chooseAndSelect}" var="cs">
-                                                <div class="radio i-checks">
-                                                    <label>
-                                                        <input type="radio" ${cs.select?"checked":""} value="${cs.choose.id}" name="${status.count}"> <i></i> ${cs.choose.conte}</label>
-                                                </div>
-                                            </c:forEach>
-                                        </c:if>
-
-                                        <%-- 多选 --%>
-                                        <c:if test="${tp.topic.single == 1}">
-                                            <c:forEach items="${tp.chooseAndSelect}" var="cs">
-                                                <div class="checkbox i-checks">
-                                                    <label>
-                                                        <input type="checkbox" ${cs.select?"checked":""} value="${cs.choose.id}" name="${status.count}"> <i></i> ${cs.choose.conte}</label>
-                                                </div>
-                                            </c:forEach>
-                                        </c:if>
+            <div class="wrapper wrapper-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>请进行选择/查看选择</h5>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
                                     </div>
                                 </div>
 
-                                <div class="hr-line-dashed"></div>
-                            </c:forEach>
+                                <div class="ibox-content">
+                                    <form method="post" action="VoteServlet" class="form-horizontal">
+                                        <input type="hidden" name="method" value="addChoose">
+                                        <input type="hidden" name="uid" value="${requestScope.uid}">
+
+                                        <c:forEach items="${requestScope.list}" var="tp" varStatus="status">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">
+                                                        ${tp.topic.conte}
+                                                    <!--<small class="text-navy">自定义样式</small>-->
+                                                </label>
+
+                                                <div class="col-sm-9">
+                                                        <%-- 单选 --%>
+                                                    <c:if test="${tp.topic.single == 0}">
+                                                        <c:forEach items="${tp.chooseAndSelect}" var="cs">
+                                                            <div class="radio i-checks">
+                                                                <label>
+                                                                    <input type="radio" ${cs.select?"checked":""}
+                                                                           value="${cs.choose.id}"
+                                                                           name="${status.count}">
+                                                                    <i></i> ${cs.choose.conte}</label>
+                                                            </div>
+                                                        </c:forEach>
+                                                    </c:if>
+
+                                                        <%-- 多选 --%>
+                                                    <c:if test="${tp.topic.single == 1}">
+                                                        <c:forEach items="${tp.chooseAndSelect}" var="cs">
+                                                            <div class="checkbox i-checks">
+                                                                <label>
+                                                                    <input type="checkbox" ${cs.select?"checked":""}
+                                                                           value="${cs.choose.id}"
+                                                                           name="${status.count}">
+                                                                    <i></i> ${cs.choose.conte}</label>
+                                                            </div>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+
+                                            <div class="hr-line-dashed"></div>
+                                        </c:forEach>
 
 
-                            <div class="form-group" id="sub">
-                                <div style="text-align: center;">
-                                    <button class="btn btn-primary" type="submit">提交选择</button>
-                                    <button class="btn btn-white" type="submit">取消</button>
+                                        <div class="form-group" id="sub">
+                                            <div style="text-align: center;">
+                                                <button class="btn btn-primary" type="submit">提交选择</button>
+                                                <button class="btn btn-white" type="submit">取消</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,7 +171,7 @@
         function isSelect() {
             var s = $(":checked");
             if (s.length !== 0) {
-                $("#sub").css('display','none');
+                $("#sub").css('display', 'none');
             }
         }
     </script>

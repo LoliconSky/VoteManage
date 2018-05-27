@@ -47,7 +47,35 @@ public class VoteServlet extends HttpServlet {
         }
     }
 
-    private void queryAllTopic2Jsp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void addTopic(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String topicStr = request.getParameter("topic");
+        String singleStr = request.getParameter("single");
+        String[] chooses = request.getParameterValues("choose");
+
+        // 构造题目
+        Topic topic = new Topic();
+        topic.setConte(topicStr);
+        topic.setSingle(Integer.parseInt(singleStr));
+
+        // 构造选项
+        Set<Choose> list = new HashSet<>();
+        for (String choose : chooses) {
+            Choose c = new Choose();
+            c.setConte(choose);
+            c.setTopicByTid(topic);
+            list.add(c);
+        }
+
+        topic.setChoosesById(list);
+
+        VoteService voteService = new VoteService();
+        voteService.addTopic(topic);
+
+        response.sendRedirect(request.getContextPath() + "/suc.html");
+    }
+
+        private void queryAllTopic2Jsp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         VoteService voteService = new VoteService();
         List<Topic> data = voteService.queryTopicAndChoose();
 

@@ -15,7 +15,7 @@
         <property name="conte">
             <column name="conte" sql-type="varchar(32)" length="32" not-null="true"/>
         </property>
-        <set name="choosesById" inverse="true" lazy="false">
+        <set name="choosesById" inverse="true" lazy="false" cascade="save-update">
             <key>
                 <column name="tid" not-null="true"/>
             </key>
